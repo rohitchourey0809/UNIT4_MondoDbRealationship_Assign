@@ -15,7 +15,8 @@ const connect = ()=>{
 // <------------------------//section schemes------------------------->
 //step-1 := Create section schema 
 const sectionScheme = new mongoose.Schema({
-    BOOKNAME:{Title: "The Struggle of FailureBoy",required:true}
+    BOOKNAME:{Title: "The Struggle of FailureBoy",required:true},
+    book_id : {type:moongoose.Schema.Types.ObjectId}
 },
 {
    timestamps:true 
@@ -25,12 +26,27 @@ const sectionScheme = new mongoose.Schema({
 const Section = mongoose.model("section",sectionScheme)
 
 //<--------------------bookschema------->
+// {Title: "The Struggle of FailureBoy",required:true}
 const bookSchema = new mongoose.Scheme({
-    BOOKNAME:{Title: "The Struggle of FailureBoy",required:true},
-    section_id:{ Title:mongoose.Schema.Types.ObjectId,
+
+    BOOKNAME:{type: String,required:true},
+    section_id:{ type:mongoose.Schema.Types.ObjectId,
                  reference:"section",
                  required:true }
 })
+ 
+const Book = mongoose.model("book",bookSchema)
+// <-----------------------------authorSchema-------------->
+const authorSchema = new mongoose.Scheme({
+    book_id : {type:mongoose.Schema.Types.ObjectId,
+               reference:"book",required:true},
+    user_id : {type:mongoose.Schema.Types.ObjectId,
+        reference:"user",required:true}           
+
+
+})
+
+const Author = mongoose.model("author",authorSchema)
 
 app.listen(5000,async()=>{
     try{
