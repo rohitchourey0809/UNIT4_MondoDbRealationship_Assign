@@ -14,13 +14,14 @@ const connect = ()=>{
 
 // <------------------------//section schemes------------------------->
 //step-1 := Create section schema 
-const sectionScheme = new mongoose.Schema({
-    BOOKNAME:{Title: "The Struggle of FailureBoy",required:true},
-    book_id : {type:moongoose.Schema.Types.ObjectId}
-},
-{
-   timestamps:true 
-})
+const sectionScheme = new mongoose.Schema(
+    {
+    BOOKNAME:{type :String,required:true},
+    // book_id : {type:moongoose.Schema.Types.ObjectId}
+    },
+    {
+    timestamps:true 
+    })
 
 //step-2 ---Create Model Schema
 const Section = mongoose.model("section",sectionScheme)
@@ -38,8 +39,7 @@ const bookSchema = new mongoose.Scheme({
 const Book = mongoose.model("book",bookSchema)
 // <-----------------------------authorSchema-------------->
 const authorSchema = new mongoose.Scheme({
-    book_id : {type:mongoose.Schema.Types.ObjectId,
-               reference:"book",required:true},
+    
     user_id : {type:mongoose.Schema.Types.ObjectId,
         reference:"user",required:true}           
 
