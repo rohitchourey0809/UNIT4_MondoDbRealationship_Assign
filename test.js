@@ -19,8 +19,10 @@ const sectionScheme = new mongoose.Schema(
     BOOKNAME:{type :String,required:true},
     // book_id : {type:moongoose.Schema.Types.ObjectId}
     },
+
     {
-    timestamps:true 
+        versionKey : fasle,
+        timestamps:true 
     })
 
 //step-2 ---Create Model Schema
@@ -31,9 +33,14 @@ const Section = mongoose.model("section",sectionScheme)
 const bookSchema = new mongoose.Scheme({
 
     BOOKNAME:{type: String,required:true},
+    BODY:{type: String,required:true},
     section_id:{ type:mongoose.Schema.Types.ObjectId,
-                 reference:"section",
+                 ref:"section",
                  required:true }
+},
+{
+    versionKey : fasle,
+    timestamps:true 
 })
  
 const Book = mongoose.model("book",bookSchema)
@@ -41,12 +48,45 @@ const Book = mongoose.model("book",bookSchema)
 const authorSchema = new mongoose.Scheme({
     
     user_id : {type:mongoose.Schema.Types.ObjectId,
-        reference:"user",required:true}           
+        ref:"user",required:true}           
 
 
+},
+{
+    versionKey : false,
+    timestamps:true 
 })
 
 const Author = mongoose.model("author",authorSchema)
+
+
+// <-------------Users------------------>
+const userSchema = new mongoose.Schema({
+    firstname : {type:String,required:true},
+    lastname : {type:String,required:true}
+},
+{
+    versionKey : false,
+    timestamps:true 
+})
+
+const User = new mongoose.Model("user",userSchema)
+
+// <-------------bookauthorSchema--------------->
+
+const bookauthorSchema = new mongoose.Schema(
+    {
+    book_id: {type:String,required:true,ref:"book"},
+    author_id: {type:String,required:true}
+    },
+    {
+        versionKey : false,
+        timestamps:true 
+    })
+
+
+    const Bookauthor = new mongoose.Model("bookauthor",bookauthorSchema)
+
 
 app.listen(5000,async()=>{
     try{
